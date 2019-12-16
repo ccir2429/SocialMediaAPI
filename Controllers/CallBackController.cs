@@ -36,7 +36,7 @@ namespace WebApplication3.Controllers
                 await GetDataFromFb(code);
             }
 
-            return Redirect(ConfigurationManager.AppSettings["localhostRedirect"]);
+            return Redirect(ReadSetting("localhostRedirect"));
         }
 
         private async Task GetDataFromFb(string code)
@@ -44,24 +44,24 @@ namespace WebApplication3.Controllers
             User newUser = new User(); 
             var rawParameters = new Dictionary<string, string>
             {
-                {"client_id",ConfigurationManager.AppSettings["client_id"]},
-                {"redirect_uri",ConfigurationManager.AppSettings["redirect_uri"]},
-                {"client_secret",ConfigurationManager.AppSettings["client_secret"] },
+                {"client_id",ReadSetting("client_id")},
+                {"redirect_uri",ReadSetting("redirect_uri")},
+                {"client_secret",ReadSetting("client_secret") },
                 {"code",code}
             };
             var urlContent = new FormUrlEncodedContent(rawParameters);
             string access_token = String.Empty;
             using( var httpClient = new HttpClient())
             {
-                var response = await httpClient.PostAsync(ConfigurationManager.AppSettings["fb_access_token"],urlContent);
+                var response = await httpClient.PostAsync(ReadSetting("fb_access_token"),urlContent);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsResult = (JObject)JsonConvert.DeserializeObject(responseString);
                 access_token = (string)jsResult["access_token"];
             }
             using (var requestClient = new HttpClient())
             {
-                var fields = ConfigurationManager.AppSettings["media_fields"];
-                var response = await requestClient.GetAsync(ConfigurationManager.AppSettings["fb_media"]+ "?fields="+fields+" & access_token="+access_token);
+                var fields = ReadSetting("media_fields");
+                var response = await requestClient.GetAsync(ReadSetting("fb_media")+ "?fields="+fields+" & access_token="+access_token);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsResult = (JObject)JsonConvert.DeserializeObject(responseString);
                 try
@@ -76,15 +76,6 @@ namespace WebApplication3.Controllers
                 newUser.Email = jsResult["email"].ToString(); // email
                 newUser.Feed = jsResult["feed"].ToString(); // email
                 var feedDataList= jsResult["feed"]["data"];
-                   /* foreach (var feedData in feedDataList)
-                    {
-                        var urlResponse = await requestClient.GetAsync("https://graph.facebook.com/v5.0/" + feedData["id"] +"/?access_token="  + access_token);
-                        var stringReal= await urlResponse.Content.ReadAsStringAsync();
-                        var jsReal = (JObject)JsonConvert.DeserializeObject(stringReal);
-                        var real = jsReal;
-
-                        newUser.realUrlList +=" "+real.ToString();
-                    }*/
                 }
                 catch (Exception e) { }
                 newUser.token = access_token;
@@ -99,6 +90,19 @@ namespace WebApplication3.Controllers
         public User GetData()
         {
             return crtUser;
+        }
+        private string ReadSetting(string key)
+        {
+            try
+            {
+                var appSettings = ConfigurationManager.AppSettings;
+                string result = appSettings[key] ?? "AppConfigKeyNotFound";
+                return result;
+            }
+            catch (ConfigurationErrorsException)
+            {
+                return "AppConfigException";
+            }
         }
     }
 }

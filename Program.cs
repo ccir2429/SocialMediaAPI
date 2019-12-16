@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -22,5 +23,15 @@ namespace WebApplication3
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        public static void ConfigurationManagerValidator()
+        {
+            var appSettings = ConfigurationManager.AppSettings;
+            if (appSettings.Count == 0)
+            {
+                Console.WriteLine("AppSettings is empty.");
+                throw new System.Configuration.ConfigurationException("App.Config file is empty!");
+            }
+        }
     }
 }

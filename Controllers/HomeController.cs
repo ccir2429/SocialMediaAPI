@@ -34,15 +34,29 @@ namespace WebApplication3.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        private string ReadSetting(string key)
+        {
+            try
+            {
+                var appSettings = ConfigurationManager.AppSettings;
+                string result = appSettings[key] ?? "AppConfigKeyNotFound";
+                return result;
+            }
+            catch (ConfigurationErrorsException)
+            {
+                return "ConfigErrorException";
+            }
+        }
         public void Login()
         {
-            var client_id = ConfigurationManager.AppSettings["client_id"];
-            var redirect_uri = ConfigurationManager.AppSettings["redirect_uri"];
-            var response_type = ConfigurationManager.AppSettings["response_type"];
-            var authUrl = ConfigurationManager.AppSettings["fb_token"]
-                + "&client_id=" + client_id
-                + "&redirect_uri=" + redirect_uri
-                + "&response_type=" + response_type;
+            
+            var client_id = ReadSetting("client_id");
+            var redirect_uri = ReadSetting("redirect_uri");
+            var response_type = ReadSetting("response_type");
+            var authUrl = ReadSetting("fb_token");
+            authUrl+="&client_id=" + client_id
+                    + "&redirect_uri=" + redirect_uri
+                    + "&response_type=" + response_type;
             
             Response.Redirect(authUrl);
             
