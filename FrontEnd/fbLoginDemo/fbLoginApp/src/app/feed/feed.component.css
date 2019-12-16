@@ -1,0 +1,67 @@
+.feed{min-width: 50%;
+    min-height: 100px;
+}
+.feed th{
+    color: white;
+    background-color:#1c92d6dc ;
+}
+.feed td {
+    min-width: 200px;
+    list-style-type:none;
+    background: white;
+    padding: 10px;
+}
+.feed td:nth-child(1){
+    width: 15%;
+}
+.feed td:nth-child(2){
+    width: 15%;
+}
+.feed td:nth-child(3){
+    width: 70%;
+}
+.feed td .id {
+    text-justify: inter-word;
+    color: black;
+    margin: 5px;
+    padding-left:-10px
+}
+.feed td .date {
+    text-justify: inter-word;
+    color: black;
+    margin: 5px;
+    padding-left:-10px
+}
+.feed td .msg {
+    flood-color: red;
+    text-justify: inter-word;
+    margin: 5px;
+    padding-left:-10px
+}
+table {width:100%;
+max-width:100%;
+min-width: min-content;
+}
+ 
+.info {
+    background-color: #1c92d6dc;
+    border:2px solid #0080cafa ;
+    min-width: max-content;
+    min-height: 100px;
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+}
+.info td{
+    font-size: larger;
+}
+.info th{
+    font-size: large;
+}
+a{
+    color:white;
+    text-decoration: none;
+    display: inline-block;
+    background-color: dodgerblue;
+    padding:15px;
+    border-radius: 10px;
+}

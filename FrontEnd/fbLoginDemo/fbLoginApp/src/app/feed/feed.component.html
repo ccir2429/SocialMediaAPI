@@ -1,0 +1,51 @@
+<table class="info">
+    <tr>
+      <th>
+        Account info
+      </th>
+    </tr>
+    <tr>
+      <th>
+        User ID
+      </th>
+      <td>
+       {{userData["id"]}} 
+      </td>
+      
+    </tr>
+    <tr>
+    <th>
+      Email
+    </th>
+    <td>
+      {{userData["email"]}}
+    </td>
+    </tr>
+    <tr>
+    <th>
+      Hometown
+    </th>
+    <td>
+      {{userData["location"]}}
+    </td>
+    </tr>
+  </table><br>
+  <div class="feed">
+<table><tr>
+  <th><u>Post_ID</u></th>
+  <th><u>Date</u></th>
+  <th><u>Content</u></th>
+</tr>
+<tr *ngFor="let obj of feedIdList">
+    <td >
+        <div class="id"><a href="https://facebook.com/me/posts/{{obj[0]}}" target="blank">View on Facebook</a></div>
+    </td> 
+    <td >
+        <div class="date">{{obj[2]}}</div>
+    </td> 
+    <td>
+        <div class="msg">{{obj[1]}}</div>
+    </td>
+</tr>
+</table>
+</div>
