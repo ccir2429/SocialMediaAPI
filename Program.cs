@@ -30,7 +30,7 @@ namespace WebApplication3
             if (appSettings.Count == 0)
             {
                 Console.WriteLine("AppSettings is empty.");
-                throw new System.Configuration.ConfigurationException("App.Config file is empty!");
+                throw new ConfigurationException("App.Config file is empty!");
             }
         }
     }

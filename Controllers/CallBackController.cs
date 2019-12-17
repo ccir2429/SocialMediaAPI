@@ -14,7 +14,7 @@ namespace WebApplication3.Controllers
     public class CallBackController : Controller
     {
         private static User crtUser = new User();
-        private readonly UserContext _userContext;
+        //private readonly UserContext _userContext;
 
         public IActionResult Index()
         {
@@ -67,7 +67,7 @@ namespace WebApplication3.Controllers
                 {
                     newUser.Location = jsResult["location"]["name"].ToString();// locatie
                 }
-                catch (Exception e) { }
+                catch (Exception e) { Console.Error.WriteLine(e); }
                 //need to add: name, email, profile pic
                 newUser.Name = jsResult["name"].ToString(); // username
                 newUser.ID = jsResult["id"].ToString(); // id
@@ -77,7 +77,7 @@ namespace WebApplication3.Controllers
                     newUser.Feed = jsResult["feed"].ToString(); // email
                     var feedDataList = jsResult["feed"]["data"];
                 }
-                catch (Exception e) { }
+                catch (Exception e) { Console.Error.WriteLine(e); }
                 newUser.token = access_token;
             }
             SaveData(newUser);
