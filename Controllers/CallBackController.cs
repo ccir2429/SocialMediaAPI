@@ -54,28 +54,27 @@ namespace WebApplication3.Controllers
             {
                 var response = await httpClient.PostAsync(ReadSetting("fb_access_token"), urlContent);
                 var responseString = await response.Content.ReadAsStringAsync();
-                var jsResult = (JObject)JsonConvert.DeserializeObject(responseString);
-                access_token = (string)jsResult["access_token"];
+                var result = new Models.Result(responseString,true);
+                access_token = result.Access_token;
             }
             using (var requestClient = new HttpClient())
             {
                 var fields = ReadSetting("media_fields");
                 var response = await requestClient.GetAsync(ReadSetting("fb_media") + "?fields=" + fields + " & access_token=" + access_token);
                 var responseString = await response.Content.ReadAsStringAsync();
-                var jsResult = (JObject)JsonConvert.DeserializeObject(responseString);
+                var result = new Models.Result(responseString, false);
                 try
                 {
-                    newUser.Location = jsResult["location"]["name"].ToString();// locatie
+                    newUser.Location = result.Location;// locatie
                 }
                 catch (Exception e) { Console.Error.WriteLine(e); }
                 //need to add: name, email, profile pic
-                newUser.Name = jsResult["name"].ToString(); // username
-                newUser.ID = jsResult["id"].ToString(); // id
+                newUser.Name = result.Name; // username
+                newUser.ID = result.ID; // id
                 try
                 {
-                    newUser.Email = jsResult["email"].ToString(); // email
-                    newUser.Feed = jsResult["feed"].ToString(); // email
-                    var feedDataList = jsResult["feed"]["data"];
+                    newUser.Email = result.Email; // email
+                    newUser.Feed = result.Feed; // email
                 }
                 catch (Exception e) { Console.Error.WriteLine(e); }
                 newUser.token = access_token;
