@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net.Http;
+using System.Threading.Tasks;
 using WebApplication3.Models;
 
 namespace WebApplication3.Controllers
 {
-   
+
     public class CallBackController : Controller
     {
         private static User crtUser = new User();
@@ -41,7 +40,7 @@ namespace WebApplication3.Controllers
 
         private async Task GetDataFromFb(string code)
         {
-            User newUser = new User(); 
+            User newUser = new User();
             var rawParameters = new Dictionary<string, string>
             {
                 {"client_id",ReadSetting("client_id")},
@@ -51,9 +50,9 @@ namespace WebApplication3.Controllers
             };
             var urlContent = new FormUrlEncodedContent(rawParameters);
             string access_token = String.Empty;
-            using( var httpClient = new HttpClient())
+            using (var httpClient = new HttpClient())
             {
-                var response = await httpClient.PostAsync(ReadSetting("fb_access_token"),urlContent);
+                var response = await httpClient.PostAsync(ReadSetting("fb_access_token"), urlContent);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsResult = (JObject)JsonConvert.DeserializeObject(responseString);
                 access_token = (string)jsResult["access_token"];
@@ -61,7 +60,7 @@ namespace WebApplication3.Controllers
             using (var requestClient = new HttpClient())
             {
                 var fields = ReadSetting("media_fields");
-                var response = await requestClient.GetAsync(ReadSetting("fb_media")+ "?fields="+fields+" & access_token="+access_token);
+                var response = await requestClient.GetAsync(ReadSetting("fb_media") + "?fields=" + fields + " & access_token=" + access_token);
                 var responseString = await response.Content.ReadAsStringAsync();
                 var jsResult = (JObject)JsonConvert.DeserializeObject(responseString);
                 try
@@ -72,10 +71,11 @@ namespace WebApplication3.Controllers
                 //need to add: name, email, profile pic
                 newUser.Name = jsResult["name"].ToString(); // username
                 newUser.ID = jsResult["id"].ToString(); // id
-                try { 
-                newUser.Email = jsResult["email"].ToString(); // email
-                newUser.Feed = jsResult["feed"].ToString(); // email
-                var feedDataList= jsResult["feed"]["data"];
+                try
+                {
+                    newUser.Email = jsResult["email"].ToString(); // email
+                    newUser.Feed = jsResult["feed"].ToString(); // email
+                    var feedDataList = jsResult["feed"]["data"];
                 }
                 catch (Exception e) { }
                 newUser.token = access_token;
@@ -87,10 +87,12 @@ namespace WebApplication3.Controllers
         {
             crtUser = newUser;
         }
+
         public User GetData()
         {
             return crtUser;
         }
+
         private string ReadSetting(string key)
         {
             try

@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fbLoginDemo", "..\..\..\Documents\TestProjects\fbLoginDemo\fbLoginDemo.csproj", "{07B027F9-F439-4BF3-9D7B-CBEC04E96934}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationTest", "..\WebApplicationTest\WebApplicationTest.csproj", "{E94CC0DA-785C-4F77-9B2C-29938F8CA22A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{07B027F9-F439-4BF3-9D7B-CBEC04E96934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07B027F9-F439-4BF3-9D7B-CBEC04E96934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07B027F9-F439-4BF3-9D7B-CBEC04E96934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E94CC0DA-785C-4F77-9B2C-29938F8CA22A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E94CC0DA-785C-4F77-9B2C-29938F8CA22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E94CC0DA-785C-4F77-9B2C-29938F8CA22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E94CC0DA-785C-4F77-9B2C-29938F8CA22A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
