@@ -21,6 +21,11 @@ namespace WebApplication3.Controllers
             return View();
         }
 
+        public User GetUser()
+        {
+            return crtUser;
+        }
+
         [HttpGet]
         public ActionResult<User> InstantData()
         {
